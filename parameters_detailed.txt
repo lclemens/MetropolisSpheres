@@ -1,0 +1,42 @@
+listName		outputTest			% output file name
+NFil			1				% Number of filaments
+N			1				% Number of segments
+filamentInputMethod	1				% Method used in getFilaments to decide on filament number and length
+	% 0 - parameters.txt or command line
+	% 1 - filaments.txt
+baseSepDistance		1				% Separation distance between base of filaments
+irLigand		1				% Ligand radius measured in Kuhn lengths
+brLigand		1				% Bound ligand radius measured in Kuhn lengths
+baserLigand		4				% Radius of "Base" (sphere at base of filaments instead of membrane)
+Force			0				% Force pulling on ends of filaments
+kdimer			0				% Spring constant for ends of filaments
+dimerDist0		1				% Rest separation distance of filament ends
+verboseTF		0				% Boolean setting if output is verbose or summary
+iSiteInputMethod	4				% Method used in getSites to decide where iSites are located
+	% 0 - zeta chain
+	% 1 - do nothing, use command line input
+	% 2 - from file
+	% 3 - use last site
+StiffenRange		0				% Range of segments that are locally stiffened
+stiffCase		0				% Method used in initializeStiffSites to determine which sites are stiff
+	% 0 - CD3Zeta
+	% for now, this is the only option
+occupiedSites		0_0_0_0_0_0			% String to determine which of the 6 CD3Zeta iSites are 'phosphorylated'
+occupiedSitesNoSpace 	000000				% String used in output to determine which CD3Zeta iSites are 'phosphorylated'
+filamentFilename	filaments.txt			% Text file with lengths of filaments
+iSiteFilename		iSites.txt			% Text file with locations of ligand sites
+bSiteFilename		bSites.txt			% Text file with locations of bound ligand sites
+basicSiteFilename	basicSites.txt			% Text file with locations of basic residues
+bSiteInputMethod	2				% Method used in getSites to decide where bound sites are located
+	% 0 - two bound at same site
+	% 1 - do nothing, use command line input
+	% 2 - bound ligand CD3 Zeta
+	% 3 - from file
+	% 4 - use last site
+parabolaDepth		0				% Depth of basic residue well
+parabolaWidth		0				% Width of basic residue well
+wallParabolaK		0				% Width of membrane barrier for regular residues
+Erepulsion		0				% Strength of phosphorylated residue potential
+Zrepulsion		0				% Width of phosphorylated residue potential
+PhosElectroRange 	0				% Range of amino acids affected by phosphorylation potential
+localConcCutoff		1				% Distance where ligand is considered 'close enough' for local concentration calculation
