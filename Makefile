@@ -5,7 +5,7 @@ all:
 run:
 	gcc -O3 driveMetropolis.c -o metropolis.out -lm
 
-	./metropolis.out parameters.txt output 4
+	./metropolis.out parameters.txt output 6
 
 batch:
 

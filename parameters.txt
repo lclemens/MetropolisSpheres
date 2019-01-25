@@ -3,3 +3,4 @@ NSphere			10
 sRadius			1
 kBound			1000
 kSphere			0.0001
+verboseTF		0
