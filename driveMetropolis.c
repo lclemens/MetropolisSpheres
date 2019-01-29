@@ -125,7 +125,7 @@ int main( int argc, char *argv[] )
     
     // initialize random seed
 	iseed = RanInitReturnIseed(0);
-    if (TALKATIVE) printf("iseed: %ld",iseed);
+    if (TALKATIVE) printf("iseed: %ld\n",iseed);
 	
     // run metropolis algorithm
 	metropolisJoint();

@@ -17,6 +17,9 @@ void metropolisJoint()
         rSphere[i][2] = 10;
     }
 	
+    int failedMembrane=0;
+    int failedSpheres=0;
+    int failedContourLength=0;
 	endConstraintPassedTF=0;
 	nt=0;
     E = INF;
@@ -41,13 +44,13 @@ void metropolisJoint()
         {
             //THINK ABOUT THIS PART HERE!!!!!!!!!!!!!
             rate[0] = (double)accepts[0]/(double)proposals[0];
-            printf("accepts[0]: %ld\n",accepts[0]);
-            printf("proposals[0]: %ld\n",proposals[0]);
-            printf("rate[0]: %ld\n",rate[0]);
+            //printf("accepts[0]: %ld\n",accepts[0]);
+            //printf("proposals[0]: %ld\n",proposals[0]);
+            //printf("rate[0]: %ld\n",rate[0]);
             rate[1] = (double)accepts[1]/(double)proposals[1];
-            printf("accepts[1]: %ld\n",accepts[1]);
-            printf("proposals[1]: %ld\n",proposals[1]);
-            printf("rate[1]: %ld\n",rate[1]);
+            //printf("accepts[1]: %ld\n",accepts[1]);
+            //printf("proposals[1]: %ld\n",proposals[1]);
+            //printf("rate[1]: %ld\n",rate[1]);
             
             //printf("current accepts/proposals: %d/%d=%f, %d/%d=%f\n", accepts[0], proposals[0], rate[0], accepts[1], proposals[1], rate[1]);
             
@@ -211,13 +214,13 @@ void metropolisJoint()
                 }
                 else
                 {
-                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
                 }
             }
             i=5;
-            sphereDistCurrent = sqrt((rSpherePropose[i][0]-rAnchor[i][0])*(rSpherePropose[i][0]-rAnchor[3][0])+
-                                 (rSpherePropose[i][1]-rAnchor[i][1])*(rSpherePropose[i][1]-rAnchor[3][1])+
-                                 (rSpherePropose[i][2]-rAnchor[i][2])*(rSpherePropose[i][2]-rAnchor[3][2]));
+            sphereDistCurrent = sqrt((rSpherePropose[i][0]-rAnchor[3][0])*(rSpherePropose[i][0]-rAnchor[3][0])+
+                                 (rSpherePropose[i][1]-rAnchor[3][1])*(rSpherePropose[i][1]-rAnchor[3][1])+
+                                 (rSpherePropose[i][2]-rAnchor[3][2])*(rSpherePropose[i][2]-rAnchor[3][2]));
 
                 sphereAnchorDist0 = 27;
         
@@ -228,7 +231,7 @@ void metropolisJoint()
                 }
                 else
                 {
-                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
                 }
         
             for(i=8;i<10;i++)
@@ -249,7 +252,7 @@ void metropolisJoint()
                 }
                 else
                 {
-                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
                 }
             }
         
@@ -270,7 +273,7 @@ void metropolisJoint()
                 }
                 else
                 {
-                    ENew += 0.5*kBound*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
                 }
         
             //sphere 5 attached to sphere 4
@@ -289,7 +292,7 @@ void metropolisJoint()
             }
             else
             {
-                ENew += 0.5*kBound*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
             }
             //sphere 7 attached to sphere 6
             i1=6;
@@ -306,7 +309,7 @@ void metropolisJoint()
             }
             else
             {
-                ENew += 0.5*kBound*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
             }
         
             //sphere 8 attached to sphere 7
@@ -325,7 +328,7 @@ void metropolisJoint()
             }
             else
             {
-                ENew += 0.5*kBound*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
             }
             
             /****************************************************************/
@@ -347,7 +350,7 @@ void metropolisJoint()
                     
                     /**********************/
                     // energy between bound ligands and other bound ligands
-                        for (ib2=0;ib2<NSphere;ib2++) //for each next ligand
+                        for (ib2=(i+1);ib2<NSphere;ib2++) //for each next ligand
                         {
                             
                             if ((rSpherePropose[i][0]-rSpherePropose[ib2][0])*(rSpherePropose[i][0]-rSpherePropose[ib2][0]) +
@@ -373,6 +376,17 @@ void metropolisJoint()
             if (  TWISTER < exp(E-ENew) ) //always accepts if ENew<E, accepts with normal (?) probability if ENew>E
             {
                 E = ENew;
+                
+                if(E<0.0001)
+                {
+                    printf("E: %f\n",E);
+                    fflush(stdout);
+
+                   for(i=0;i<NSphere;i++)
+                   {
+                       printf("Sphere Position %ld: %f, %f, %f\n",i,rSphere[i][0],rSphere[i][1],rSphere[i][2]);
+                   }
+                }
                 if(0)
                 {
                     printf("E: %f\n",E);
@@ -426,6 +440,9 @@ void metropolisJoint()
                             printf("Membrane\n");
                             printf("%f\n",rSphere[i][2]);
                         }
+                        //if(nt>=100000)
+                            failedMembrane++;
+                        
                         endConstraintPassedTF = 0;
                         i=NSphere;
                     }
@@ -449,6 +466,9 @@ void metropolisJoint()
                             {
                                 printf("Spheres\n");
                             }
+                            //if(nt>=100000)
+                                failedSpheres++;
+                            
                             endConstraintPassedTF = 0;
                             ib2=NSphere;
                             i=NSphere;
@@ -467,17 +487,20 @@ void metropolisJoint()
                         contourLength = 29;
                     if(i==2)
                         contourLength = 27;
-                    if((rSphere[i][0]-rAnchor[i][0])*(rSphere[i][0]-rAnchor[i][0])+
+                    if(sqrt((rSphere[i][0]-rAnchor[i][0])*(rSphere[i][0]-rAnchor[i][0])+
                                              (rSphere[i][1]-rAnchor[i][1])*(rSphere[i][1]-rAnchor[i][1])+
-                                             (rSphere[i][2]-rAnchor[i][2])*(rSphere[i][2]-rAnchor[i][2]) > contourLength*contourLength)
+                                             (rSphere[i][2]-rAnchor[i][2])*(rSphere[i][2]-rAnchor[i][2]))-sRadius > contourLength)
                     {
                         if(0)
                         {
                             printf("WLC\n");
-                            printf("%ld,%f,%f\n",i,contourLength*contourLength,(rSphere[i][0]-rAnchor[i][0])*(rSphere[i][0]-rAnchor[i][0])+
-                               (rSphere[i][1]-rAnchor[i][1])*(rSphere[i][1]-rAnchor[i][1])+
-                               (rSphere[i][2]-rAnchor[i][2])*(rSphere[i][2]-rAnchor[i][2]));
+                            printf("%ld,%f,%f\n",i,contourLength,sqrt((rSphere[i][0]-rAnchor[i][0])*(rSphere[i][0]-rAnchor[i][0])+
+                                                                      (rSphere[i][1]-rAnchor[i][1])*(rSphere[i][1]-rAnchor[i][1])+
+                                                                      (rSphere[i][2]-rAnchor[i][2])*(rSphere[i][2]-rAnchor[i][2]))-sRadius);
                         }
+                        //if(nt>=100000)
+                            failedContourLength++;
+                        
                         endConstraintPassedTF = 0;
                         i=3;
                     }
@@ -488,17 +511,20 @@ void metropolisJoint()
             {
                 i=5;
                 contourLength = 27;
-                if((rSphere[i][0]-rAnchor[i][0])*(rSphere[i][0]-rAnchor[i][0])+
-                   (rSphere[i][1]-rAnchor[i][1])*(rSphere[i][1]-rAnchor[i][1])+
-                   (rSphere[i][2]-rAnchor[i][2])*(rSphere[i][2]-rAnchor[i][2]) > contourLength*contourLength)
+                if(sqrt((rSphere[i][0]-rAnchor[3][0])*(rSphere[i][0]-rAnchor[3][0])+
+                   (rSphere[i][1]-rAnchor[3][1])*(rSphere[i][1]-rAnchor[3][1])+
+                   (rSphere[i][2]-rAnchor[3][2])*(rSphere[i][2]-rAnchor[3][2]))-sRadius > contourLength)
                 {
                     if(0)
                     {
                         printf("WLC\n");
-                        printf("%ld,%f,%f\n",i,contourLength*contourLength,(rSphere[i][0]-rAnchor[i][0])*(rSphere[i][0]-rAnchor[i][0])+
-                           (rSphere[i][1]-rAnchor[i][1])*(rSphere[i][1]-rAnchor[i][1])+
-                           (rSphere[i][2]-rAnchor[i][2])*(rSphere[i][2]-rAnchor[i][2]));
+                        printf("%ld,%f,%f\n",i,contourLength,sqrt((rSphere[i][0]-rAnchor[3][0])*(rSphere[i][0]-rAnchor[3][0])+
+                                                                  (rSphere[i][1]-rAnchor[3][1])*(rSphere[i][1]-rAnchor[3][1])+
+                                                                  (rSphere[i][2]-rAnchor[3][2])*(rSphere[i][2]-rAnchor[3][2]))-sRadius);
                     }
+                    //if(nt>=100000)
+                        failedContourLength++;
+                    
                     endConstraintPassedTF = 0;
                 }
             }
@@ -511,17 +537,20 @@ void metropolisJoint()
                     if(i==9)
                         contourLength = 42;
                     
-                    if((rSphere[i][0]-rAnchor[i][0])*(rSphere[i][0]-rAnchor[i][0])+
-                       (rSphere[i][1]-rAnchor[i][1])*(rSphere[i][1]-rAnchor[i][1])+
-                       (rSphere[i][2]-rAnchor[i][2])*(rSphere[i][2]-rAnchor[i][2]) > contourLength*contourLength)
+                    if(sqrt((rSphere[i][0]-rAnchor[i-4][0])*(rSphere[i][0]-rAnchor[i-4][0])+
+                       (rSphere[i][1]-rAnchor[i-4][1])*(rSphere[i][1]-rAnchor[i-4][1])+
+                       (rSphere[i][2]-rAnchor[i-4][2])*(rSphere[i][2]-rAnchor[i-4][2]))-sRadius > contourLength)
                     {
                         if(0)
                         {
                             printf("WLC\n");
-                            printf("%ld,%f,%f\n",i,contourLength*contourLength,(rSphere[i][0]-rAnchor[i][0])*(rSphere[i][0]-rAnchor[i][0])+
-                               (rSphere[i][1]-rAnchor[i][1])*(rSphere[i][1]-rAnchor[i][1])+
-                               (rSphere[i][2]-rAnchor[i][2])*(rSphere[i][2]-rAnchor[i][2]));
+                            printf("%ld,%f,%f\n",i,contourLength,sqrt((rSphere[i][0]-rAnchor[i-4][0])*(rSphere[i][0]-rAnchor[i-4][0])+
+                               (rSphere[i][1]-rAnchor[i-4][1])*(rSphere[i][1]-rAnchor[i-4][1])+
+                               (rSphere[i][2]-rAnchor[i-4][2])*(rSphere[i][2]-rAnchor[i-4][2]))-sRadius);
                         }
+                        //if(nt>=100000)
+                            failedContourLength++;
+                        
                         endConstraintPassedTF = 0;
                         i=10;
                     }
@@ -537,17 +566,20 @@ void metropolisJoint()
                 i2=2;
                 
                 contourLength = 39;
-                if((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
+                if((sqrt((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
                                          (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
-                   (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2])>contourLength*contourLength)
+                   (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]))-2*sRadius) > contourLength)
                 {
                     if(0)
                     {
                         printf("WLC\n");
-                        printf("%d,%d,%f,%f\n",i1,i2,contourLength*contourLength,(rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
-                           (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
-                           (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]));
+                        printf("%d,%d,%f,%f\n",i1,i2,contourLength,sqrt((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
+                                                                        (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
+                                                                        (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]))-2*sRadius);
                     }
+                    //if(nt>=100000)
+                        failedContourLength++;
+                    
                     endConstraintPassedTF = 0;
                 }
 
@@ -558,17 +590,20 @@ void metropolisJoint()
                 i1=4;
                 i2=3;
                 contourLength = 31;
-                if((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
+                if((sqrt((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
                    (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
-                   (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2])>contourLength*contourLength)
+                   (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]))-2*sRadius) > contourLength)
                 {
                     if(0)
                     {
                         printf("WLC\n");
-                        printf("%d,%d,%f,%f\n",i1,i2,contourLength*contourLength,(rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
+                        printf("%d,%d,%f,%f\n",i1,i2,contourLength,sqrt((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
                            (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
-                           (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]));
+                           (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]))-2*sRadius);
                     }
+                    //if(nt>=100000)
+                        failedContourLength++;
+                    
                     endConstraintPassedTF = 0;
                 }
             }
@@ -578,17 +613,20 @@ void metropolisJoint()
                 i1=6;
                 i2=5;
                 contourLength = 39;
-                if((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
+                if((sqrt((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
                    (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
-                   (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2])>contourLength*contourLength)
+                   (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]))-2*sRadius) > contourLength)
                 {
                     if(0)
                     {
                         printf("WLC\n");
-                        printf("%d,%d,%f,%f\n",i1,i2,contourLength*contourLength,(rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
-                               (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
-                               (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]));
+                        printf("%d,%d,%f,%f\n",i1,i2,contourLength,sqrt((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
+                                                                        (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
+                                                                        (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]))-2*sRadius);
                     }
+                    //if(nt>=100000)
+                        failedContourLength++;
+                    
                     endConstraintPassedTF = 0;
                 }
             }
@@ -599,17 +637,20 @@ void metropolisJoint()
                 i1=7;
                 i2=6;
                 contourLength = 31;
-                if((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
+                if((sqrt((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
                    (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
-                   (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2])>contourLength*contourLength)
+                   (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]))-2*sRadius) > contourLength)
                 {
-                    if(0)
+                    if(1)
                     {
                         printf("WLC\n");
-                        printf("%d,%d,%f,%f\n",i1,i2,contourLength*contourLength,(rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
-                           (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
-                           (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]));
+                        printf("%d,%d,%f,%f\n",i1,i2,contourLength,sqrt((rSphere[i1][0]-rSphere[i2][0])*(rSphere[i1][0]-rSphere[i2][0])+
+                                                                        (rSphere[i1][1]-rSphere[i2][1])*(rSphere[i1][1]-rSphere[i2][1])+
+                                                                        (rSphere[i1][2]-rSphere[i2][2])*(rSphere[i1][2]-rSphere[i2][2]))-2*sRadius);
                     }
+                    //if(nt>=100000)
+                        failedContourLength++;
+                    
                     endConstraintPassedTF = 0;
                 }
             }
@@ -639,10 +680,25 @@ void metropolisJoint()
     printf("Energy Fails: %f\n",1-((float)energyPasses/(float)nt));
     fflush(stdout);
     
+    printf("Failed Membrane: %f\n",(float)failedMembrane/(float)nt);
+    fflush(stdout);
+    
+    printf("Failed Spheres: %f\n",(float)failedSpheres/(float)nt);
+    fflush(stdout);
+    
+    printf("Failed Contour Length: %f\n",(float)failedContourLength/(float)nt);
+    fflush(stdout);
+    
+    printf("E Final: %f\n",E);
+    fflush(stdout);
     
     if(endConstraintPassedTF)
     {
        printf("Not sterically constrained.\n");
+        for(i=0;i<NSphere;i++)
+        {
+            printf("Sphere Position %ld: %f, %f, %f\n",i,rSphere[i][0],rSphere[i][1],rSphere[i][2]);
+        }
        outputSummary();
      }
                                                                       

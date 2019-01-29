@@ -29,7 +29,7 @@ void getParameters()
     if (TALKATIVE) printf("This is sphere spring constant: %lf\n", kSphere);
     
     fscanf(paramsFile,"%s %d", tmpString, &verboseTF);
-    if (TALKATIVE) printf("This is sphere spring constant: %d\n", verboseTF);
+    if (TALKATIVE) printf("This is verboseTF: %d\n", verboseTF);
     
     fclose(paramsFile);
     

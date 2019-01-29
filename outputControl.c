@@ -16,10 +16,11 @@ void outputSummary()
     {
         fList = fopen(listName, "a");
         
-        fprintf(fList, "%ld\n%d\n%f\n",
+        fprintf(fList, "%ld\n%d\n%f\n%f\n",
                 nt,        // 1
                 NSphere,   // 2
-                sRadius);  // 3
+                sRadius,    // 3
+                E);         // 4
         
         for(i=0;i<6;i++)
         {
@@ -42,16 +43,17 @@ void dataRecording()
     if (verboseTF)
     {
         
-        if ( (nt <= 100000) )
+        if ( nt>=100000 && (nt <= 500000) )
         {
             // output results to file
             fList = fopen(listName, "a");
             
-            fprintf(fList, "%ld %d %f %ld ",
+            fprintf(fList, "%ld %d %f %f %ld ",
                     nt,                         // 1
                     NSphere,                    // 2
                     sRadius,                    // 3
-                    constraintProposalsTotal);  // 4
+                    E,                          // 4
+                    constraintProposalsTotal);  // 5
             
             for(i=0;i<6;i++)
             {
