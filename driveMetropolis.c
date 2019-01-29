@@ -1,7 +1,7 @@
 /*** Allard Lab jun.allard@uci.edu                    ***/
 
 #define TWISTER genrand_real3()
-#define NTMAX           10000000
+#define NTMAX           2e9
 #define NMAX            10
 #define NTADAPT         20000
 #define NTCHECK         200000
@@ -125,6 +125,7 @@ int main( int argc, char *argv[] )
     
     // initialize random seed
 	iseed = RanInitReturnIseed(0);
+    if (TALKATIVE) printf("iseed: %ld",iseed);
 	
     // run metropolis algorithm
 	metropolisJoint();

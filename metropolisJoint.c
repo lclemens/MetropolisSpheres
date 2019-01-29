@@ -41,7 +41,13 @@ void metropolisJoint()
         {
             //THINK ABOUT THIS PART HERE!!!!!!!!!!!!!
             rate[0] = (double)accepts[0]/(double)proposals[0];
+            printf("accepts[0]: %ld\n",accepts[0]);
+            printf("proposals[0]: %ld\n",proposals[0]);
+            printf("rate[0]: %ld\n",rate[0]);
             rate[1] = (double)accepts[1]/(double)proposals[1];
+            printf("accepts[1]: %ld\n",accepts[1]);
+            printf("proposals[1]: %ld\n",proposals[1]);
+            printf("rate[1]: %ld\n",rate[1]);
             
             //printf("current accepts/proposals: %d/%d=%f, %d/%d=%f\n", accepts[0], proposals[0], rate[0], accepts[1], proposals[1], rate[1]);
             
@@ -54,8 +60,8 @@ void metropolisJoint()
                     if (rate[iParam] > 0.5 || rate[iParam] < 0.3)
                     {
                         dChi[iParam] = dChi[iParam]*rate[iParam]/0.44;
-                        if (dChi[iParam] > 10)
-                            dChi[iParam] = 10;
+                        if (dChi[iParam] > 1)
+                            dChi[iParam] = 1;
                         if (dChi[iParam] < DCHIMIN)
                             dChi[iParam] = DCHIMIN;
                     }
@@ -192,22 +198,37 @@ void metropolisJoint()
                                             (rSpherePropose[i][2]-rAnchor[i][2])*(rSpherePropose[i][2]-rAnchor[i][2]));
                 
                 if(i==0)
-                    sphereAnchorDist0 = sqrt(42);
+                    sphereAnchorDist0 = 42;
                 if(i==1)
-                    sphereAnchorDist0 = sqrt(29);
+                    sphereAnchorDist0 = 29;
                 if(i==2)
-                    sphereAnchorDist0 = sqrt(27);
+                    sphereAnchorDist0 = 27;
                 
-                    ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
+                if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
+                {
+                    ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                }
+                else
+                {
+                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                }
             }
             i=5;
             sphereDistCurrent = sqrt((rSpherePropose[i][0]-rAnchor[i][0])*(rSpherePropose[i][0]-rAnchor[3][0])+
                                  (rSpherePropose[i][1]-rAnchor[i][1])*(rSpherePropose[i][1]-rAnchor[3][1])+
                                  (rSpherePropose[i][2]-rAnchor[i][2])*(rSpherePropose[i][2]-rAnchor[3][2]));
 
-                sphereAnchorDist0 = sqrt(27);
+                sphereAnchorDist0 = 27;
         
-            ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
+                if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
+                {
+                    ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                }
+                else
+                {
+                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                }
+        
             for(i=8;i<10;i++)
             {
                 sphereDistCurrent = sqrt((rSpherePropose[i][0]-rAnchor[i-4][0])*(rSpherePropose[i][0]-rAnchor[i-4][0])+
@@ -215,11 +236,18 @@ void metropolisJoint()
                                          (rSpherePropose[i][2]-rAnchor[i-4][2])*(rSpherePropose[i][2]-rAnchor[i-4][2]));
 
                 if(i==8)
-                    sphereAnchorDist0 = sqrt(29);
+                    sphereAnchorDist0 = 29;
                 if(i==9)
-                    sphereAnchorDist0 = sqrt(42);
+                    sphereAnchorDist0 = 42;
                 
-                ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sphereAnchorDist0)*((sphereDistCurrent-sRadius)-sphereAnchorDist0);
+                if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
+                {
+                    ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                }
+                else
+                {
+                    ENew += 0.5*kBound*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                }
             }
         
             // add energy for spheres attached to other spheres
@@ -230,9 +258,16 @@ void metropolisJoint()
                                      (rSpherePropose[i1][1]-rSpherePropose[i2][1])*(rSpherePropose[i1][1]-rSpherePropose[i2][1])+
                                      (rSpherePropose[i1][2]-rSpherePropose[i2][2])*(rSpherePropose[i1][2]-rSpherePropose[i2][2]));
         
-                sphereAnchorDist0 = sqrt(39);
+                sphereAnchorDist0 = 39;
         
-                ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sphereAnchorDist0)*((sphereDistCurrent-2*sRadius)-sphereAnchorDist0);
+                if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
+                {
+                    ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                }
+                else
+                {
+                    ENew += 0.5*kBound*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                }
         
             //sphere 5 attached to sphere 4
             i1=4;
@@ -241,18 +276,32 @@ void metropolisJoint()
                                      (rSpherePropose[i1][1]-rSpherePropose[i2][1])*(rSpherePropose[i1][1]-rSpherePropose[i2][1])+
                                      (rSpherePropose[i1][2]-rSpherePropose[i2][2])*(rSpherePropose[i1][2]-rSpherePropose[i2][2]));
         
-            sphereAnchorDist0 = sqrt(31);
+            sphereAnchorDist0 = 31;
         
-            ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sphereAnchorDist0)*((sphereDistCurrent-2*sRadius)-sphereAnchorDist0);
+            if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
+            {
+                ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+            }
+            else
+            {
+                ENew += 0.5*kBound*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+            }
             //sphere 7 attached to sphere 6
             i1=6;
             i2=5;
             sphereDistCurrent = sqrt((rSpherePropose[i1][0]-rSpherePropose[i2][0])*(rSpherePropose[i1][0]-rSpherePropose[i2][0])+
                                      (rSpherePropose[i1][1]-rSpherePropose[i2][1])*(rSpherePropose[i1][1]-rSpherePropose[i2][1])+
                                      (rSpherePropose[i1][2]-rSpherePropose[i2][2])*(rSpherePropose[i1][2]-rSpherePropose[i2][2]));
-            sphereAnchorDist0 = sqrt(39);
+            sphereAnchorDist0 = 39;
         
-            ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sphereAnchorDist0)*((sphereDistCurrent-2*sRadius)-sphereAnchorDist0);
+            if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
+            {
+                ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+            }
+            else
+            {
+                ENew += 0.5*kBound*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+            }
         
             //sphere 8 attached to sphere 7
             i1=7;
@@ -261,9 +310,16 @@ void metropolisJoint()
                                      (rSpherePropose[i1][1]-rSpherePropose[i2][1])*(rSpherePropose[i1][1]-rSpherePropose[i2][1])+
                                      (rSpherePropose[i1][2]-rSpherePropose[i2][2])*(rSpherePropose[i1][2]-rSpherePropose[i2][2]));
         
-            sphereAnchorDist0 = sqrt(31);
+            sphereAnchorDist0 = 31;
         
-            ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sphereAnchorDist0)*((sphereDistCurrent-2*sRadius)-sphereAnchorDist0);
+            if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
+            {
+                ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+            }
+            else
+            {
+                ENew += 0.5*kBound*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+            }
             
             /****************************************************************/
             // Bound ligand energies
@@ -278,7 +334,7 @@ void metropolisJoint()
                         if(rSpherePropose[i][2]<sRadius) // if any bound ligands intersect with membrane
                         {
                             // add energy based on intersection distance
-                            ENew += 0.5*kBound*(rSpherePropose[i][2]-sRadius)*(rSpherePropose[ib][2]-sRadius);
+                            ENew += 0.5*kBound*(rSpherePropose[i][2]-sRadius)*(rSpherePropose[i][2]-sRadius);
                         }
                     }
                     
@@ -561,6 +617,7 @@ void metropolisJoint()
         } //
         
         /********* 6. Increment time *******************/
+        dataRecording();
 		nt++;
 		
 	} // done time loop

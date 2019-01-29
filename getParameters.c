@@ -26,7 +26,10 @@ void getParameters()
     if (TALKATIVE) printf("This is bound ligand spring constant: %lf\n", kBound);
     
     fscanf(paramsFile,"%s %lf", tmpString, &kSphere);
-    if (TALKATIVE) printf("This is sphere spring constant: %f\n", kSphere);
+    if (TALKATIVE) printf("This is sphere spring constant: %lf\n", kSphere);
+    
+    fscanf(paramsFile,"%s %d", tmpString, &verboseTF);
+    if (TALKATIVE) printf("This is sphere spring constant: %d\n", verboseTF);
     
     fclose(paramsFile);
     

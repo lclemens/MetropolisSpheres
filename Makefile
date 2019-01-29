@@ -5,7 +5,7 @@ all:
 run:
 	gcc -O3 driveMetropolis.c -o metropolis.out -lm
 
-	./metropolis.out parameters.txt output 4
+	./metropolis.out parameters.txt output 6
 
 batch:
 
@@ -29,9 +29,9 @@ hpc:
 
 copyrepo:
 
-	git -C ~/Documents/PolymerGit log -1 --pretty=format:%H > "CommitUsedHash.txt"
+	git -C ~/Documents/MetropolisSpheres log -1 --pretty=format:%H > "CommitUsedHash.txt"
 
-	cp -r ~/Documents/PolymerGit/src/PolymerCode/ .
+	cp -r ~/Documents/MetropolisSpheres/ .
 
 parallel:
 

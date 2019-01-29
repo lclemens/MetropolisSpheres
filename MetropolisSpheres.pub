@@ -1,0 +1,21 @@
+#!/bin/bash
+#$ -N MetropolisSpheres
+#$ -t 1-20
+#$ -q free*,pub*,abio,bio
+#$ -ckpt restart
+#$ -e logs/
+#$ -o logs/
+
+cd /pub/laraclemens/polymer-c_runs/20190125MetropolisSpheres
+
+echo Running on host `hostname`
+echo Time is `date`
+echo Directory is `pwd`
+
+# Run your executable
+if [ ! -e MetropolisSpheres.$SGE_TASK_ID ]
+    then
+    ./metropolis.out parameters.txt MetropolisSpheres.$SGE_TASK_ID $SGE_TASK_ID
+fi
+
+echo Finished at `date`

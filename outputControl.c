@@ -16,11 +16,22 @@ void outputSummary()
     {
         fList = fopen(listName, "a");
         
+        fprintf(fList, "%ld\n%d\n%f\n",
+                nt,        // 1
+                NSphere,   // 2
+                sRadius);  // 3
+        
+        for(i=0;i<6;i++)
+        {
+            fprintf(fList, "%f %f %f\n",rAnchor[i][0],rAnchor[i][1],rAnchor[i][2]);
+        }
+        
         for(i=0;i<NSphere;i++)
         {
             fprintf(fList, "%f %f %f\n", rSphere[i][0],rSphere[i][1],rSphere[i][2]);
         }
-
+        
+        
         fclose(fList);
     }
 
@@ -28,7 +39,35 @@ void outputSummary()
 
 void dataRecording()
 {
-    
+    if (verboseTF)
+    {
+        
+        if ( (nt <= 100000) )
+        {
+            // output results to file
+            fList = fopen(listName, "a");
+            
+            fprintf(fList, "%ld %d %f %ld ",
+                    nt,                         // 1
+                    NSphere,                    // 2
+                    sRadius,                    // 3
+                    constraintProposalsTotal);  // 4
+            
+            for(i=0;i<6;i++)
+            {
+                fprintf(fList, "%f %f %f ",rAnchor[i][0],rAnchor[i][1],rAnchor[i][2]);
+            }
+            
+            
+            for(i=0;i<NSphere;i++)
+            {
+                fprintf(fList, "%f %f %f ",rSphere[i][0],rSphere[i][1],rSphere[i][2]);
+            }
+            
+            fprintf(fList, "\n");
+            fclose(fList);
+        }
+    } // finished verbose output
     
     
 }
