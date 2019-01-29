@@ -206,7 +206,8 @@ void metropolisJoint()
                 
                 if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
                 {
-                    ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    //ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    ENew += 0;
                 }
                 else
                 {
@@ -222,7 +223,8 @@ void metropolisJoint()
         
                 if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
                 {
-                    ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    //ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    ENew += 0;
                 }
                 else
                 {
@@ -242,7 +244,8 @@ void metropolisJoint()
                 
                 if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
                 {
-                    ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    //ENew += 0.5*kSphere*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-sRadius)-sqrt(sphereAnchorDist0));
+                    ENew += 0;
                 }
                 else
                 {
@@ -262,7 +265,8 @@ void metropolisJoint()
         
                 if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
                 {
-                    ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                    //ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                    ENew += 0;
                 }
                 else
                 {
@@ -280,7 +284,8 @@ void metropolisJoint()
         
             if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
             {
-                ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                //ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                ENew += 0;
             }
             else
             {
@@ -296,7 +301,8 @@ void metropolisJoint()
         
             if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
             {
-                ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                //ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                ENew += 0;
             }
             else
             {
@@ -314,7 +320,8 @@ void metropolisJoint()
         
             if((sphereDistCurrent-sRadius)<sphereAnchorDist0)
             {
-                ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                //ENew += 0.5*kSphere*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0))*((sphereDistCurrent-2*sRadius)-sqrt(sphereAnchorDist0));
+                ENew += 0;
             }
             else
             {
@@ -352,7 +359,10 @@ void metropolisJoint()
                                                                   (rSpherePropose[i][1]-rSpherePropose[ib2][1])*(rSpherePropose[i][1]-rSpherePropose[ib2][1]) +
                                                                   (rSpherePropose[i][2]-rSpherePropose[ib2][2])*(rSpherePropose[i][2]-rSpherePropose[ib2][2]))) - (2*sRadius);
                                 
-                                ENew += 0.5*kBound*boundCentertoBoundDistance*boundCentertoBoundDistance;
+                                //ENew += 0.5*kBound*boundCentertoBoundDistance*boundCentertoBoundDistance;
+                                
+                                //Soft spring to allow spheres to pass through each other if necessary
+                                ENew += 0.5*kSphere*boundCentertoBoundDistance*boundCentertoBoundDistance;
 
                             }
                         }
