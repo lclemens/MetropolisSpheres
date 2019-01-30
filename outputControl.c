@@ -43,7 +43,7 @@ void dataRecording()
     if (verboseTF)
     {
         
-        if ( nt>=100000 && (nt <= 500000) )
+        if ( nt>=0 && (nt <= 200000) )
         {
             // output results to file
             fList = fopen(listName, "a");
