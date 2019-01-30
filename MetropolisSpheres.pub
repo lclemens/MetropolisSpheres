@@ -6,7 +6,7 @@
 #$ -e logs/
 #$ -o logs/
 
-cd /pub/laraclemens/polymer-c_runs/20190125MetropolisSpheres
+cd /pub/lclemens/polymer-c_runs/20190125MetropolisSpheres
 
 echo Running on host `hostname`
 echo Time is `date`
