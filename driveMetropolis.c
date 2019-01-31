@@ -2,7 +2,7 @@
 
 #define TWISTER genrand_real3()
 #define NTMAX           2e9
-#define NMAX            10
+#define NMAX            30
 #define NTADAPT         20000
 #define NTCHECK         200000
 #define DCHIMIN         1e-4
@@ -74,8 +74,7 @@ long ib, ib2;
 /* MULTIPLE FILAMENT Variables*/
 double baseSepDistance;
 
-double sphereAnchorDist0;
-double sphereDistCurrent;
+double distCurrent;
 
 /* Filament tail dimerization force */
 double dimerDistCurrent, dimerDist0;

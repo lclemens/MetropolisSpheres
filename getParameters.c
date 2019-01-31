@@ -16,6 +16,7 @@ void getParameters()
     fscanf(paramsFile,"%s %s", tmpString, listName);
     if (TALKATIVE) printf("This is output file name: %s\n", listName);
     
+    // Parameter is number of spheres (number of points tracked = 2*NSphere)
     fscanf(paramsFile,"%s %d", tmpString, &NSphere);
     if (TALKATIVE) printf("This is number of spheres: %d\n", NSphere);
     

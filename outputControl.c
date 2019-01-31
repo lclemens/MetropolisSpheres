@@ -18,7 +18,7 @@ void outputSummary()
         
         fprintf(fList, "%ld\n%d\n%f\n%f\n",
                 nt,        // 1
-                NSphere,   // 2
+                2*NSphere,   // 2
                 sRadius,    // 3
                 E);         // 4
         
@@ -27,7 +27,7 @@ void outputSummary()
             fprintf(fList, "%f %f %f\n",rAnchor[i][0],rAnchor[i][1],rAnchor[i][2]);
         }
         
-        for(i=0;i<NSphere;i++)
+        for(i=0;i<2*NSphere;i++)
         {
             fprintf(fList, "%f %f %f\n", rSphere[i][0],rSphere[i][1],rSphere[i][2]);
         }
@@ -50,7 +50,7 @@ void dataRecording()
             
             fprintf(fList, "%ld %d %f %f %ld ",
                     nt,                         // 1
-                    NSphere,                    // 2
+                    2*NSphere,                    // 2
                     sRadius,                    // 3
                     E,                          // 4
                     constraintProposalsTotal);  // 5
@@ -61,7 +61,7 @@ void dataRecording()
             }
             
             
-            for(i=0;i<NSphere;i++)
+            for(i=0;i<2*NSphere;i++)
             {
                 fprintf(fList, "%f %f %f ",rSphere[i][0],rSphere[i][1],rSphere[i][2]);
             }
