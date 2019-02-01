@@ -47,5 +47,3 @@ end
 %% Plot Energy
 figure(2); clf; hold on;
 plot(ntStart:ntTotal,E(1:end),'-','LineWidth',lw);
-
-
