@@ -1,7 +1,7 @@
 /*** Allard Lab jun.allard@uci.edu                    ***/
 
 #define TWISTER genrand_real3()
-#define NTMAX           10
+#define NTMAX           4e9
 #define NMAX            30
 #define NTADAPT         20000
 #define NTCHECK         200000
