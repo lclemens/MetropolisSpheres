@@ -31,7 +31,7 @@ copyrepo:
 
 	git -C ~/Documents/MetropolisSpheres log -1 --pretty=format:%H > "CommitUsedHash.txt"
 
-	cp -r ~/Documents/MetropolisSpheres/ .
+	rsync -r ~/Documents/MetropolisSpheres/ . --exclude='*.m~' --exclude='.git' --exclude='.gitignore'
 
 parallel:
 
