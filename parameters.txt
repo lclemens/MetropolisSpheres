@@ -1,6 +1,6 @@
 listName		outputTest
 NSphere			10
 sRadius			12
-kBound			1000
+kBound			100
 kSphere			0.1
-verboseTF		1
+verboseTF		0
