@@ -32,29 +32,29 @@ void metropolisJoint()
 //    }
     
     // TCR configuration estimated from PDB: 6JXR
-        rAnchor[1][0] = 0;
-        rAnchor[1][1] = 0;
+        rAnchor[0][0] = 0;
+        rAnchor[0][1] = 0;
+        rAnchor[0][2] = 0;
+    
+        rAnchor[1][0] = -cos( 0.753 )*4.1;
+        rAnchor[1][1] = sin( 0.753 )*4.1;
         rAnchor[1][2] = 0;
     
-        rAnchor[2][0] = -cos( 0.753 )*4.1;
-        rAnchor[2][1] = sin( 0.753 )*4.1;
+        rAnchor[2][0] = -9.7333;
+        rAnchor[2][1] = 0;
         rAnchor[2][2] = 0;
     
-        rAnchor[3][0] = -9.7333;
-        rAnchor[3][1] = 0;
+        rAnchor[3][0] = -cos( 0.5095 )*8.0667;
+        rAnchor[3][1] = sin( 0.5095 )*8.0667;
         rAnchor[3][2] = 0;
     
-        rAnchor[4][0] = -cos( 0.5095 )*8.0667;
-        rAnchor[4][1] = sin( 0.5095 )*8.0667;
+        rAnchor[4][0] = -cos( 0.97545 )*10.1667;
+        rAnchor[4][1] = sin( 0.97545 )*10.1667;
         rAnchor[4][2] = 0;
     
-        rAnchor[5][0] = -cos( 0.97545 )*10.1667;
-        rAnchor[5][1] = sin( 0.97545 )*10.1667;
+        rAnchor[5][0] = -cos( 1.069 )*11.3;
+        rAnchor[5][1] = sin( 1.069 )*11.3;
         rAnchor[5][2] = 0;
-    
-        rAnchor[6][0] = -cos( 1.069 )*11.3;
-        rAnchor[6][1] = sin( 1.069 )*11.3;
-        rAnchor[6][2] = 0;
     
     /************************************************************************************/
     //initalize spheres in vertical position oriented over their respective anchors
