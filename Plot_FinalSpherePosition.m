@@ -3,7 +3,7 @@
 
 savefolder = '/Volumes/GoogleDrive/My Drive/Papers/MultisiteDisorder/Data_Figures';
 savesubfolder = '3.SimultaneousBinding/MetropolisSpheres';
-saveTF = 0;
+saveTF = 1;
 % Radius of sphere to read
 for r=23
 
@@ -190,26 +190,36 @@ set(gca,'view',[-81.2000 66.0000]);
 
 % possible good paired views, but still not sufficient to show all pairs
 % don't intersect
-set(gca,'view',[255.2000   69.2000]);
-set(gca,'view',[165.2000   78.0000]);
+% set(gca,'view',[255.2000   69.2000]);
+% set(gca,'view',[165.2000   78.0000]);
+% 
+% 
+% set(gca,'view',[119.2000   76.4000]);
+% set(gca,'view',[-98.0000   70.8000]);
+%   
+% set(gca,'view',[66.0000   70.0000]);
+% 
+% set(gca,'view',[113.6000   82.0000]);
+% set(gca,'view',[74.8000   58.0000]);
+
+set(gca,'view',[68.4000   86.0000]);
 
 
-set(gca,'view',[119.2000   76.4000]);
-set(gca,'view',[-98.0000   70.8000]);
-  
-set(gca,'view',[66.0000   70.0000]);
+
 if(saveTF)
-    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View1.fig'),'fig');
-    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View1.pdf'),'pdf');
-    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View1.eps'),'epsc');
-    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View1.png'),'png');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres23_View1.fig'),'fig');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres23_View1.pdf'),'pdf');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres23_View1.eps'),'epsc');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres23_View1.png'),'png');
 end
-set(gca,'view',[196.4000   60.4000]);
-set(gca,'view',[-69.6000   62.8000]);
+% set(gca,'view',[196.4000   60.4000]);
+% set(gca,'view',[-69.6000   62.8000]);
+
+set(gca,'view',[66.8000   44.4000]);
 
 if(saveTF)
-    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View2.fig'),'fig');
-    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View2.pdf'),'pdf');
-    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View2.eps'),'epsc');
-    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View2.png'),'png');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres23_View2.fig'),'fig');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres23_View2.pdf'),'pdf');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres23_View2.eps'),'epsc');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres23_View2.png'),'png');
 end
