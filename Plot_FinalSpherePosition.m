@@ -3,9 +3,9 @@
 
 savefolder = '/Volumes/GoogleDrive/My Drive/Papers/MultisiteDisorder/Data_Figures';
 savesubfolder = '3.SimultaneousBinding/MetropolisSpheres';
-saveTF = 1;
+saveTF = 0;
 % Radius of sphere to read
-for r=25
+for r=23
 
 folder = '~/Documents/pub/lclemens/polymer-c_runs/20191010MetropolisSpheresTCRConfig';
 
@@ -13,30 +13,30 @@ M = dlmread(fullfile(folder,['MetropolisSpheres.',num2str(r)]));
 
 %% Read File
 ntTotal(r) = M(1,1);
-NSphere = M(2,1);
-sRadius = 0.3*M(4,1); % nm
-E = M(5,1);
+NSphere = M(2,1)./2; % outputControl prints 2*NSphere
+sRadius = 0.3*M(3,1); % nm
+E = M(4,1);
 
 if(sRadius ~= 0.3*r)
     disp('Wrong file');
 end
 
 for j=1:6
-    rAnchor.x(j) = 0.3*M(5+j,1); % nm
-    rAnchor.y(j) = 0.3*M(5+j,2); % nm
-    rAnchor.z(j) = 0.3*M(5+j,3); % nm
+    rAnchor.x(j) = 0.3*M(4+j,1); % nm
+    rAnchor.y(j) = 0.3*M(4+j,2); % nm
+    rAnchor.z(j) = 0.3*M(4+j,3); % nm
 end
 
 for j=1:NSphere
-    rSphere.x(j) = 0.3*M(5+6+j,1); % nm
-    rSphere.y(j) = 0.3*M(5+6+j,2); % nm
-    rSphere.z(j) = 0.3*M(5+6+j,3); % nm
+    rSphere.x(j) = 0.3*M(4+6+j,1); % nm
+    rSphere.y(j) = 0.3*M(4+6+j,2); % nm
+    rSphere.z(j) = 0.3*M(4+6+j,3); % nm
 end
 
 for j=1:NSphere
-    rPolymer.x(j) = 0.3*M(5+6+NSphere+j,1); % nm
-    rPolymer.y(j) = 0.3*M(5+6+NSphere+j,2); % nm
-    rPolymer.z(j) = 0.3*M(5+6+NSphere+j,3); % nm
+    rPolymer.x(j) = 0.3*M(4+6+NSphere+j,1); % nm
+    rPolymer.y(j) = 0.3*M(4+6+NSphere+j,2); % nm
+    rPolymer.z(j) = 0.3*M(4+6+NSphere+j,3); % nm
 end
 %% Confirm constraints
 passedTF=1;
