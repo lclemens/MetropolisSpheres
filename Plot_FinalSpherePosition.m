@@ -2,9 +2,9 @@
 % Plot spheres
 
 % Radius of sphere to read
-for r=1:25
+for r=1:23
 
-folder = '~/Documents/pub/lclemens/polymer-c_runs/20190205MetropolisSpheresStraightInitial';
+folder = '~/Documents/pub/lclemens/polymer-c_runs/20191010MetropolisSpheresTCRConfig';
 
 M = dlmread(fullfile(folder,['MetropolisSpheres.',num2str(r)]));
 
