@@ -1,8 +1,11 @@
 %% Read Metropolis Spheres Summary Output
 % Plot spheres
 
+savefolder = '/Volumes/GoogleDrive/My Drive/Papers/MultisiteDisorder/Data_Figures';
+savesubfolder = '3.SimultaneousBinding/MetropolisSpheres';
+saveTF = 1;
 % Radius of sphere to read
-for r=1:23
+for r=25
 
 folder = '~/Documents/pub/lclemens/polymer-c_runs/20191010MetropolisSpheresTCRConfig';
 
@@ -11,33 +14,33 @@ M = dlmread(fullfile(folder,['MetropolisSpheres.',num2str(r)]));
 %% Read File
 ntTotal(r) = M(1,1);
 NSphere = M(2,1);
-sRadius = M(4,1);
+sRadius = 0.3*M(4,1); % nm
 E = M(5,1);
 
-if(sRadius ~= r)
+if(sRadius ~= 0.3*r)
     disp('Wrong file');
 end
 
 for j=1:6
-    rAnchor.x(j) = M(5+j,1);
-    rAnchor.y(j) = M(5+j,2);
-    rAnchor.z(j) = M(5+j,3);
+    rAnchor.x(j) = 0.3*M(5+j,1); % nm
+    rAnchor.y(j) = 0.3*M(5+j,2); % nm
+    rAnchor.z(j) = 0.3*M(5+j,3); % nm
 end
 
 for j=1:NSphere
-    rSphere.x(j) = M(5+6+j,1);
-    rSphere.y(j) = M(5+6+j,2);
-    rSphere.z(j) = M(5+6+j,3);
+    rSphere.x(j) = 0.3*M(5+6+j,1); % nm
+    rSphere.y(j) = 0.3*M(5+6+j,2); % nm
+    rSphere.z(j) = 0.3*M(5+6+j,3); % nm
 end
 
 for j=1:NSphere
-    rPolymer.x(j) = M(5+6+NSphere+j,1);
-    rPolymer.y(j) = M(5+6+NSphere+j,2);
-    rPolymer.z(j) = M(5+6+NSphere+j,3);
+    rPolymer.x(j) = 0.3*M(5+6+NSphere+j,1); % nm
+    rPolymer.y(j) = 0.3*M(5+6+NSphere+j,2); % nm
+    rPolymer.z(j) = 0.3*M(5+6+NSphere+j,3); % nm
 end
 %% Confirm constraints
 passedTF=1;
-contourLength = [42,29,27,39,31,27,39,31,29,42];
+contourLength = 0.3*[42,29,27,39,31,27,39,31,29,42];  % nm
 
 % Check sphere-polymer dist
 spherePolymerDist = sqrt((rSphere.x(:)-rPolymer.x(:)).^2 + (rSphere.y(:)-rPolymer.y(:)).^2 + (rSphere.z(:)-rPolymer.z(:)).^2);
@@ -96,7 +99,7 @@ end
 % Print passed if finished constraints
 if(passedTF)
     disp('Radius');
-    disp(r);
+    disp(r); disp('Kuhn lengths');
     disp('Passed constraints.');
 else
     disp('Failed constraints.');
@@ -105,24 +108,29 @@ end
 end
 %% Plot
 
-lw = 2;
-ms = 10;
+lw = 3;
+ms = 15;
+colors_fil = [0.7 0 0; 0 0.5 0.8; 0 0.5 0; 0 0.8 0; 0.7 0 0.7; 1 0 0]
 figure(1); clf; hold on;
 
 % Anchors
 for j=1:6
-    plot3(rAnchor.x(j),rAnchor.y(j),rAnchor.z(j),'xr','MarkerSize',ms,'LineWidth',lw);
+    pM = plot3(rAnchor.x(j),rAnchor.y(j),rAnchor.z(j),'x','MarkerSize',ms,'LineWidth',lw);
+    pM.Color = colors_fil(j,:);
 end
 
-% Polymer between anchors 1-3 to ligands 1-3
+% Polymer between anchors 1-6 to ligands 1-6
 for i=1:6
     switch i
         case {1,2,3}
-            plot3([rAnchor.x(i),rSphere.x(i)],[rAnchor.y(i),rSphere.y(i)],[rAnchor.z(i),rSphere.z(i)],'-r','LineWidth',lw);
+            pL = plot3([rAnchor.x(i),rSphere.x(i)],[rAnchor.y(i),rSphere.y(i)],[rAnchor.z(i),rSphere.z(i)],'-','LineWidth',lw);
+            pL.Color = colors_fil(i,:);
         case 4
-            plot3([rAnchor.x(i),rSphere.x(i+2)],[rAnchor.y(i),rSphere.y(i+2)],[rAnchor.z(i),rSphere.z(i+2)],'-r','LineWidth',lw);
+            pL = plot3([rAnchor.x(i),rSphere.x(i+2)],[rAnchor.y(i),rSphere.y(i+2)],[rAnchor.z(i),rSphere.z(i+2)],'-','LineWidth',lw);
+            pL.Color = colors_fil(i,:);
         case {5,6}
-            plot3([rAnchor.x(i),rSphere.x(i+4)],[rAnchor.y(i),rSphere.y(i+4)],[rAnchor.z(i),rSphere.z(i+4)],'-r','LineWidth',lw);
+            pL = plot3([rAnchor.x(i),rSphere.x(i+4)],[rAnchor.y(i),rSphere.y(i+4)],[rAnchor.z(i),rSphere.z(i+4)],'-','LineWidth',lw);
+            pL.Color = colors_fil(i,:);
     end
 end
 
@@ -130,23 +138,78 @@ end
 for j=1:NSphere
     [ligandX,ligandY,ligandZ] = ellipsoid(rSphere.x(j),rSphere.y(j),rSphere.z(j),sRadius,sRadius,sRadius);
     ligand = surf(ligandX,ligandY,ligandZ);
-    ligand.FaceAlpha = 0.2;
-    ligand.FaceColor = [j*20/255 j*20/255 (255-j*20)/255]
+    colormap parula
+    ligand.FaceAlpha = 0.4;
+    %ligand.FaceColor = [j*20/255 j*20/255 (255-j*20)/255];
+    ligand.EdgeAlpha = 0.1;
+    %ligand.FaceColor = [(255-j*20)/255 (255-j*20)/255 (255-j*20)/255]; %b&w
+    %ligand.FaceColor = [0 0 0];
 end
 
 % Polymer between anchors 1-3 to ligands 1-3
 for i=[3 4 6 7]
-    plot3([rSphere.x(i),rSphere.x(i+1)],[rSphere.y(i),rSphere.y(i+1)],[rSphere.z(i),rSphere.z(i+1)],'-r','LineWidth',lw);
+    pL = plot3([rSphere.x(i),rSphere.x(i+1)],[rSphere.y(i),rSphere.y(i+1)],[rSphere.z(i),rSphere.z(i+1)],'-r','LineWidth',lw);
+    if(i==3 || i==4)
+        pL.Color = colors_fil(3,:);
+    else
+        pL.Color = colors_fil(4,:);
+    end
 end
 
 % Membrane
-[membraneX, membraneY, membraneZ] = meshgrid(-100:100,-100:100,0);
+[membraneX, membraneY, membraneZ] = meshgrid(0.3.*(-100:100),0.3.*(-100:150),0);
 membranePlot = surf(membraneX, membraneY, membraneZ,'EdgeColor','none','LineStyle','none');
 set(membranePlot,'FaceAlpha',0.9);
-set(membranePlot,'FaceColor',[0.6745 0.8588 0.9647]);
+set(membranePlot,'FaceColor',[0.6745 0.8588 0.9647]); % blue membrane
+set(membranePlot,'FaceColor',[1 0.98 0.747]); % yellow membrane
+%colors_membrane = jet(20); 
+%set(membranePlot,'FaceColor',colors_membrane(1,:)); % dark blue jet
+%membrane
 membranePlot.FaceLighting = 'none';
 
+set(gca,'Color',[0.9 0.9 0.9]);
+
+% Labels
+xlabel('x (nm)','FontName','Arial','FontSize',18);
+ylabel('y (nm)','FontName','Arial','FontSize',18);
+zlabel('z (nm)','FontName','Arial','FontSize',18);
+
+% set view
+set(gca,'view',[131.2000 62.8000]);
+set(gca,'view',[128.0000 60.4000]);
+set(gca,'view',[-32.8000 62.0000]);
+set(gca,'view',[106.4000 59.6000]);
+
+% all bases are not intersecting
+
+set(gca,'view',[106.8000 86.8000]);
+
+set(gca,'view',[86.4000 64.4000]);
+
+set(gca,'view',[-81.2000 66.0000]);
+
+% possible good paired views, but still not sufficient to show all pairs
+% don't intersect
+set(gca,'view',[255.2000   69.2000]);
+set(gca,'view',[165.2000   78.0000]);
 
 
+set(gca,'view',[119.2000   76.4000]);
+set(gca,'view',[-98.0000   70.8000]);
+  
+set(gca,'view',[66.0000   70.0000]);
+if(saveTF)
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View1.fig'),'fig');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View1.pdf'),'pdf');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View1.eps'),'epsc');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View1.png'),'png');
+end
+set(gca,'view',[196.4000   60.4000]);
+set(gca,'view',[-69.6000   62.8000]);
 
-
+if(saveTF)
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View2.fig'),'fig');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View2.pdf'),'pdf');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View2.eps'),'epsc');
+    saveas(gcf,fullfile(savefolder,savesubfolder,'MetSpheres25_View2.png'),'png');
+end
